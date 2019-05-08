@@ -1,0 +1,115 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+    aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+      <button class="btn btn-outline-info" (click)="todayTasks()">
+        <img src="assets/calendar.png"> Today's Tasks
+      </button>
+      <button class="btn btn-outline-info ml-2" (click)="tomorrowTasks()">
+        <img src="assets/calendar.png"> Tommorow's Tasks
+      </button>
+      <button class="btn btn-outline-info ml-2" (click)="allTasks()">
+        <img src="assets/calendar.png"> All Tasks
+      </button>
+    </ul>
+  </button>
+  <a class="navbar-brand" routerLink="/todos" style="color: aliceblue;">
+    <h4> To Do List </h4>
+  </a>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+      <button class="btn btn-outline-info" (click)="todayTasks()">
+        <img src="assets/calendar.png"> Today's Tasks
+      </button>
+      <button class="btn btn-outline-info ml-2" (click)="tomorrowTasks()">
+        <img src="assets/calendar.png"> Tommorow's Tasks
+      </button>
+      <button class="btn btn-outline-info ml-2" (click)="allTasks()">
+        <img src="assets/calendar.png"> All Tasks
+      </button>
+    </ul>
+  </div>
+  <div class="float-right">
+    <input type ="text" class="form-control m-2" [(ngModel)]="searchStr" placeholder="Search Here" >
+    <!-- <input id="searchQuery" class="form-control m-2" #todoSearch (keyup)="searchTodo(todoSearch.value)" type="text" placeholder="Search Here"> -->
+  </div>
+</nav>
+<div class="container2">
+  <div class="filter">
+    <div class="col-md-12">
+      <a routerLink="/todos/new">
+        <button class="btn btn-outline-info m-2">Add New Task</button>
+      </a>
+      <a routerLink="/category/new">
+        <button class="btn btn-outline-info m-2">Add New Category</button>
+      </a>
+      <div style="display: inline;" ngbDropdown class="dropdown ml-2">
+        <button ngbDropdownToggle class="btn btn-outline-info m-2 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Filter Status
+        </button>
+        <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item on-hover-pointer" (click)="completedTasks()">
+            <img src="assets/checked.png">Completed</a>
+          <a class="dropdown-item on-hover-pointer" (click)="pendingTasks()">
+            <img src="assets/refresh.png">Pending</a>
+        </div>
+      </div>
+      <div style="display: inline;" ngbDropdown class="dropdown ml-2">
+        <button ngbDropdownToggle class="btn btn-outline-info m-2 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Filter Category
+        </button>
+        <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+          <a *ngFor="let cat of categories" class="dropdown-item on-hover-pointer" (click)="catFilter(cat)">{{cat.cat_name}}</a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Task Title</th>
+          <th scope="col">Status</th>
+          <th scope="col">Category</th>
+          <th scope="col">Due Date</th>
+          <th scope="col">Task Desc</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of todosFiltered | find:'task_title':searchStr;let i=index" [appHoverHighlight]="{text:'orange'}">
+          <td>{{i+1}}</td>
+          <td>{{item.task_title | titlecase}}</td>
+          <td *ngIf="item.task_status==0">Completed</td>
+          <td *ngIf="item.task_status==1">Pending</td>
+          <td>{{getCategory(item.cat_id)}}</td>
+          <td>{{item.duedate | date:'fullDate'}}</td>
+          <td>{{item.task_desc}} </td>
+          <td>
+            <span *ngIf="item.task_status==1">
+              <a routerLink="/todos/{{item.task_id}}">
+                <button class="btn btn-xs btn-outline-info ">
+                  <img src="assets/plus.png">
+                </button>
+              </a>
+            </span>
+            <button class="btn btn-xs btn-outline-info ml-2" (click)="delete(item)">
+              <img src="assets/delete.png">
+            </button>
+            <button *ngIf="item.task_status==1" class="btn btn-xs btn-outline-info ml-2" (click)="changeStatus(item)">
+              <img src="assets/refresh.png">
+            </button>
+            <img *ngIf="item.task_status==0" src="assets/checked.png" class="m-2">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

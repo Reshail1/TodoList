@@ -1,0 +1,72 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <a class="navbar-brand" routerLink="/todos" style="color: aliceblue;"><h4> To Do List </h4></a>
+</nav>
+<div class="container">
+  <h2 class="text-center">Add a new task</h2>
+    <form [formGroup]="todoForm" #f="ngForm" (ngSubmit)="SaveTask(f.value)" >
+
+        <div class="form-group">
+          <label for="task_title">Title</label>
+          <input class="form-control" type="text" required name="task_title" id="task_title"
+          formControlName="task_title">
+          <span
+          *ngIf="!todoForm.get('task_title').valid && todoForm.get('task_title').touched"
+          class="help-block">
+            <span *ngIf="todoForm.get('task_title').errors['required']">
+            Title is Required!
+            </span>
+            <span *ngIf="!todoForm.get('task_title').errors['required']
+            && todoForm.get('task_title').errors['blankSpaces']">
+            Empty Spaces are not aceepted.
+            </span>
+        </span>
+        </div>
+        <div class="form-group">
+            <label for="task_desc">Description</label>
+            <input  class="form-control" type="text" required name="task_desc" id="task_desc"
+            formControlName="task_desc">
+            <span
+                *ngIf="!todoForm.get('task_desc').valid && todoForm.get('task_desc').touched"
+                class="help-block">
+                <span *ngIf="todoForm.get('task_desc').errors['required']">
+                Description is Required!
+                </span>
+                <span *ngIf="!todoForm.get('task_desc').errors['required']
+                && todoForm.get('task_desc').errors['blankSpaces']">
+                Empty Spaces are not aceepted.
+                </span>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="duedate">duedate</label>
+            <input class="form-control"type="date" required name="duedate" id="duedate"
+            formControlName="duedate">
+            <span
+            *ngIf="!todoForm.get('duedate').valid && todoForm.get('duedate').touched"
+            class="help-block">
+                <span *ngIf="todoForm.get('duedate').errors['required']">
+                Date is Required!
+                </span>
+                <span *ngIf="!todoForm.get('duedate').errors['required']
+                && todoForm.get('duedate').errors['invalidDate']">
+                Invalid Date!
+                </span>
+            </span>
+        </div>
+          <div class="form-group">
+            <label for="cat_id">Category</label>
+              <select class="form-control form-control-md" required  name="cat_id" id="cat_id"
+              formControlName="cat_id">
+                  <option *ngFor="let catgory of categories" value="{{catgory.cat_id}}">
+                        {{catgory.cat_name}}
+                  </option>
+              </select>
+              <span
+              *ngIf="!todoForm.get('cat_id').valid && todoForm.get('cat_id').touched"
+              class="help-block">
+              Category is Required!
+             </span>
+          </div>
+          <button [disabled]="!todoForm.valid" class="btn btn-primary" type="submit">Save Task</button>
+      </form>
+</div>

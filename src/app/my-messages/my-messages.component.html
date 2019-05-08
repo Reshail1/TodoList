@@ -1,0 +1,29 @@
+<hr>
+<h2 class="h2 text-center" >My Messages</h2>
+<hr>
+
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Status Submitted</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tr *ngFor="let message of messages">
+      <td>{{message.title}}</td>
+      <td>{{message.status ? 'Read' : 'Unread'}}</td>
+      <td>
+        <a routerLink="/messages/{{message.id}}" >
+          <button class="btn btn-primary">View Full Details</button>
+        </a>
+        <a routerLink="/contact-me/{{message.id}}" >
+          <button class="btn btn-info ml-4">Edit</button>
+        </a>
+        <button class="btn btn-danger ml-4" (click)="delete(message.id)">Delete</button>
+      </td>
+    </tr>
+  </table>
+
+</div>

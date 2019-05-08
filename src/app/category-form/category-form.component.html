@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <a class="navbar-brand" routerLink="/todos" style="color: aliceblue;"><h4> To Do List </h4></a>
+</nav>
+<div class="container">
+  <h2 class="text-center"> Add a new category</h2>
+    <form [formGroup]="catForm" #f="ngForm" (ngSubmit)="AddCate(f.value)" >
+    
+        <fieldset class="form-group">
+          <label for="cat_name">Name</label>
+          <input class="form-control" type="text" required [(ngModel)]="category.cat_name" name="cat_name" id="cat_name" 
+          formControlName="cat_name" >
+          <span
+          *ngIf="!catForm.get('cat_name').valid && catForm.get('cat_name').touched"
+          class="help-block">
+            <span
+            *ngIf="catForm.get('cat_name').errors['required']">
+               Category Name is Required!
+            </span>
+            <span *ngIf="!catForm.get('cat_name').errors['required']
+            && catForm.get('cat_name').errors['blankSpaces']">
+            Empty Spaces are not aceepted.
+            </span>
+          </span>
+        </fieldset> 
+        <fieldset class="form-group">
+          <button [disabled]="!catForm.valid" class="btn btn-primary" type="submit">Add Category</button>
+        </fieldset>
+      </form>
+</div>
