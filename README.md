@@ -1,14 +1,4 @@
 
-Here the steps to follow:
-1- Please do 'npm install' after extracting these files. 
-2- Then open mysql workbench and copy commands (1-9 lines) from 
-    'db.sql' and paste them there. This will create your database names as 'fiverr' 
-    if you want to change db name, you can do it by replacing 'fiverr' by the name of your choice.
-3- Then do 'npm start'. This will start both API and angular server. 
-
-If you still need any help, you can message me.  
-
-
 
 # P1748886TodoApp
 
