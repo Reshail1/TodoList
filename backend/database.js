@@ -1,6 +1,6 @@
 var Sequelize = require("sequelize");
 
-var database = new Sequelize('fiverr','root','kakaroot',{
+var database = new Sequelize('','','',{
   dialect:'mysql',
   host:'localhost'
 });
